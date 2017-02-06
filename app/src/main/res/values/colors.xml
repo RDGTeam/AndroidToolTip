@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="tooltip_stroke_color">#DCDCDC</color>
+    <color name="tooltip_color">#FFFFFF</color>
+</resources>

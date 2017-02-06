@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="DefaultCustomToolTip">
+     <!--<item name="android:background"></item>-->
+       <!-- <item name="android:windowIsFloating">true</item>-->
+    </style>
+
+
+</resources>

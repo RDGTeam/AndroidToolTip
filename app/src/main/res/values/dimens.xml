@@ -1,0 +1,20 @@
+<resources>
+
+    <dimen name="tooltip_default_message_size">18dp</dimen>
+    <dimen name="tooltip_default_title_size">18dp</dimen>
+
+    <dimen name="tooltip_header_padding">10dp</dimen>
+    <dimen name="tooltip_body_padding">10dp</dimen>
+
+    <dimen name="tooltip_stroke_dimen">1dp</dimen>
+
+    <dimen name="tooltip_arrow_size">25dp</dimen>
+    <dimen name="tooltip_radius_dimen">5dp</dimen>
+    <dimen name="tooltip_close_button_size">20dp</dimen>
+
+
+    <!--THIS VALUES IS IMPORTANT TO DRAW CORRECTLY THE ARROW
+    ON THE BODY RECTANGLE AND HIDE THE STROKE !!!
+    MODIFY IF YOU KNOW WHAT YOU ARE DOING !!!-->
+    <dimen name="default_arrow_margin">1dp</dimen>
+</resources>
