@@ -54,6 +54,7 @@ public class StartActivity extends AppCompatActivity {
                         RDGToolTip tt = new RDGToolTip(StartActivity.this);
                         tt.setTooltipPosition(button1, ToolTipPositionManager.TOP);
                         tt.setClosePolicy(ClosePolicy.CLOSE_ON_TAP);
+                        tt.setTitle("Title");
                         tt.setMessage("prova di messaggio ");
                         tt.show();
                     }

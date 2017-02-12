@@ -125,7 +125,7 @@ public class CustomToolTip extends DialogFragment {
         //get the window where the tooltip is drawn
         window = rawToolTip.getWindow();
 
-
+        printInfo("Dialog created");
     }
 
     /**
@@ -184,6 +184,7 @@ public class CustomToolTip extends DialogFragment {
                     }
                 }
             });
+            printInfo("setToolTipPosition = dialog positioned");
         } else {
             printInfo("setToolTipPosition = anchorView is null");
         }
