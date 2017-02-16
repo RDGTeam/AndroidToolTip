@@ -21,6 +21,10 @@ public class RDGToolTip {
     //fragment dialog instance
     private CustomToolTip tooltip;
 
+    //tooltip position
+    private ToolTipPositionManager position;
+    private View anchorView;
+
     //messages of the tooltip
     private String message;
     private String title;
@@ -53,6 +57,7 @@ public class RDGToolTip {
      */
     public void show() {
         Activity activity = (Activity) context;
+        tooltip.setToolTipPosition(anchorView, position);
         tooltip.show(activity.getFragmentManager(), "RDGToolTipManager");
     }
 
@@ -63,7 +68,8 @@ public class RDGToolTip {
      * @param position
      */
     public void setTooltipPosition(View anchorView, ToolTipPositionManager position) {
-        tooltip.setToolTipPosition(anchorView, position);
+        this.position = position;
+        this.anchorView = anchorView;
     }
 
     /*******************************

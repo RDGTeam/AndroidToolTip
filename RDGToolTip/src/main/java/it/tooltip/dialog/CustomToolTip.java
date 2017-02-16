@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -75,8 +76,9 @@ public class CustomToolTip extends DialogFragment {
     }
 
     public void setToolTipTitle(String message) {
-        if (!message.trim().isEmpty()) {
+        if (!message.trim().equals("")) {
             this.tooltipTitle.setVisibility(View.VISIBLE);
+            this.tooltipHeader.setVisibility(View.VISIBLE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 this.tooltipTitle.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
             } else {
@@ -310,12 +312,11 @@ public class CustomToolTip extends DialogFragment {
      * private method to calculate the top toolbar offset
      */
     private void calculateTopBarOffset() {
-        DisplayMetrics dm = new DisplayMetrics();
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) ((Activity) context).findViewById(android.R.id.content)).getChildAt(0);
-
-        topOffset = dm.heightPixels - viewGroup.getMeasuredHeight();
+        Rect rectangle = new Rect();
+        Window w = ((Activity) context).getWindow();
+        w.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        int statusBarHeight = rectangle.top;
+        topOffset = statusBarHeight;
     }
 
     /**
