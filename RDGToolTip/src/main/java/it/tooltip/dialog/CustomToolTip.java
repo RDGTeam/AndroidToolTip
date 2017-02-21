@@ -25,7 +25,9 @@ import it.tooltip.position.ToolTipPositionManager;
 
 public class CustomToolTip extends DialogFragment {
 
+    //context
     private Context context;
+
     private final String TAG = "CustomToolTip----->";
 
     //fragment dialog
@@ -33,7 +35,7 @@ public class CustomToolTip extends DialogFragment {
     //custom view of the dialog
     private View view;
 
-    //vie's elements
+    //view's elements
     private TextView tooltipTitle;
     private TextView tooltipBodyMessage;
     private View arrowDown;
@@ -60,11 +62,15 @@ public class CustomToolTip extends DialogFragment {
     public CustomToolTip() {
     }
 
-    /*******************************
-     * Public Methods
-     *********************************/
+    /*******************************************************************************************************************
+     * ************************************************  Public Methods  ************************************************
+     *******************************************************************************************************************/
 
-
+    /**
+     * To set the message in the tooltip
+     *
+     * @param message
+     */
     public void setToolTipMessage(String message) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             this.tooltipBodyMessage.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
@@ -73,6 +79,11 @@ public class CustomToolTip extends DialogFragment {
         }
     }
 
+    /**
+     * to set the title, if is null, the title view in set to visibility=GONE
+     *
+     * @param message
+     */
     public void setToolTipTitle(String message) {
         if (!message.trim().equals("")) {
             this.tooltipTitle.setVisibility(View.VISIBLE);
@@ -86,9 +97,13 @@ public class CustomToolTip extends DialogFragment {
     }
 
     /**
+     * Set the close policy of the dialog
+     * For example: close with outside tap, close with tap on dialog, close throught a button...
+     *
      * @param closePolicy
      */
     public void setClosePolicy(ClosePolicy closePolicy) {
+        printInfo("The close policy is = " + closePolicy);
         switch (closePolicy) {
             case CLOSE_ON_TAP:
                 setCancelable(false);
@@ -143,7 +158,7 @@ public class CustomToolTip extends DialogFragment {
             anchorViewYcoordinate = locationOnScreen[1];
 
             calculateTopBarOffset();
-            recalculateDialogPosition(anchorView);
+            recalculateDialogPosition();
 
             view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -191,9 +206,9 @@ public class CustomToolTip extends DialogFragment {
         }
     }
 
-    /*******************************
-     * @Override Methods
-     *********************************/
+    /**********************************************************************************************
+     * ************************************************  @Override Methods* ************************************************
+     **********************************************************************************************/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -215,9 +230,9 @@ public class CustomToolTip extends DialogFragment {
         return rawToolTip;
     }
 
-    /*******************************
-     * Private Methods
-     *********************************/
+    /**********************************************************************************************
+     * ************************************************  Private Methods  *************************
+     **********************************************************************************************/
     /**
      * Show the  arrow base on position, hiding the other
      *
@@ -276,8 +291,8 @@ public class CustomToolTip extends DialogFragment {
     private void centerDialogToView(View anchorView) {
 
 
-        printInfo("anchorViewXanchorView " + anchorViewXcoordinate);
-        printInfo("anchorViewYanchorView " + anchorViewYcoordinate);
+        printInfo("anchorViewX " + anchorViewXcoordinate);
+        printInfo("anchorViewY " + anchorViewYcoordinate);
 
         int anchorViewXcenter = anchorViewXcoordinate + anchorView.getWidth() / 2;
         int anchorViewYcenter = anchorViewYcoordinate + anchorView.getHeight() / 2;
@@ -311,6 +326,7 @@ public class CustomToolTip extends DialogFragment {
      * private method to calculate the top toolbar offset
      */
     private void calculateTopBarOffset() {
+        printInfo("Calculating Top Bar offset....");
         Rect rectangle = new Rect();
         Window w = ((Activity) context).getWindow();
         w.getDecorView().getWindowVisibleDisplayFrame(rectangle);
@@ -320,10 +336,9 @@ public class CustomToolTip extends DialogFragment {
 
     /**
      * First version of the method : try to overlap the anchor view
-     *
-     * @param anchorView
      */
-    private void recalculateDialogPosition(View anchorView) {
+    private void recalculateDialogPosition() {
+        printInfo("Calculating Dialog Position....");
         window.setGravity(Gravity.LEFT | Gravity.TOP);
         WindowManager.LayoutParams params = window.getAttributes();
         params.x = anchorViewXcoordinate;

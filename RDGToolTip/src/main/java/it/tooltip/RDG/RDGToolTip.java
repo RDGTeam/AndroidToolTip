@@ -15,7 +15,7 @@ import it.tooltip.position.ToolTipPositionManager;
 
 public class RDGToolTip {
 
-
+    //context
     private Context context;
 
     //fragment dialog instance
@@ -39,9 +39,9 @@ public class RDGToolTip {
         tooltip.createToolTip(context);
     }
 
-    /*******************************
-     * Methods
-     *********************************/
+    /*************************************************************************************************************
+     * ************************************************  Methods  ************************************************
+     *************************************************************************************************************/
 
     /**
      * The close policy : default is CLOSE_OUTSIDE
@@ -72,14 +72,24 @@ public class RDGToolTip {
         this.anchorView = anchorView;
     }
 
-    /*******************************
-     * Set Methods
-     *********************************/
+    /*****************************************************************************************************************
+     * *************************************************  Set Methods  ************************************************
+     *****************************************************************************************************************/
+    /**
+     * To set the tooltip message
+     *
+     * @param message
+     */
     public void setMessage(String message) {
         this.message = message;
         tooltip.setToolTipMessage(message);
     }
 
+    /**
+     * To set the tooltip title, if is null or empty, the title view is set on visibility = GONE
+     *
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
         tooltip.setToolTipTitle(title);
