@@ -34,10 +34,39 @@ public class RDGToolTip {
     private boolean isCancelable;
 
 
+    /**
+     * Create the default dialog with the default view
+     *
+     * @param context
+     */
     public RDGToolTip(Context context) {
         this.context = context;
         tooltip = new CustomToolTip();
         tooltip.createToolTip(context);
+    }
+
+    /**
+     * Create the dialog from the given view
+     *
+     * @param context
+     * @param view
+     */
+    public RDGToolTip(Context context, View view) {
+        this.context = context;
+        tooltip = new CustomToolTip();
+        tooltip.createToolTip(context, view);
+    }
+
+    /**
+     * Create the dialog from the given resource id
+     *
+     * @param context
+     * @param view
+     */
+    public RDGToolTip(Context context, int view) {
+        this.context = context;
+        tooltip = new CustomToolTip();
+        tooltip.createToolTip(context, view);
     }
 
     /*************************************************************************************************************

@@ -58,6 +58,7 @@ public class CustomToolTip extends DialogFragment {
     private int anchorViewXcoordinate;
     private int anchorViewYcoordinate;
 
+    private View customView;
 
     //offSet of screen TOOLBAR
     private int topOffset;
@@ -81,10 +82,12 @@ public class CustomToolTip extends DialogFragment {
      * @param message
      */
     public void setToolTipMessage(String message) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            this.tooltipBodyMessage.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
-        } else {
-            this.tooltipBodyMessage.setText(Html.fromHtml(message));
+        if (tooltipBodyMessage != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                this.tooltipBodyMessage.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
+            } else {
+                this.tooltipBodyMessage.setText(Html.fromHtml(message));
+            }
         }
     }
 
@@ -94,13 +97,15 @@ public class CustomToolTip extends DialogFragment {
      * @param message
      */
     public void setToolTipTitle(String message) {
-        if (!message.trim().equals("")) {
-            this.tooltipTitle.setVisibility(View.VISIBLE);
-            this.tooltipHeader.setVisibility(View.VISIBLE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                this.tooltipTitle.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
-            } else {
-                this.tooltipTitle.setText(Html.fromHtml(message));
+        if (tooltipTitle != null) {
+            if (!message.trim().equals("")) {
+                this.tooltipTitle.setVisibility(View.VISIBLE);
+                this.tooltipHeader.setVisibility(View.VISIBLE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    this.tooltipTitle.setText(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY));
+                } else {
+                    this.tooltipTitle.setText(Html.fromHtml(message));
+                }
             }
         }
     }
@@ -158,6 +163,57 @@ public class CustomToolTip extends DialogFragment {
     }
 
     /**
+     * Method that create the dialog from the given view
+     *
+     * @param context
+     * @param view
+     */
+    public void createToolTip(Context context, View view) {
+        printInfo("Constructor called");
+        this.context = context;
+        this.view = view;
+        this.customView = view;
+        rawToolTip = new Dialog(context);
+        rawToolTip.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        printInfo("Dialog created");
+        printInfo("View setted on dialog");
+
+        /* set to true the default value of isCancelable*/
+        setClosePolicy(ClosePolicy.CLOSE_OUTSIDE_TAP);
+
+        //get the window where the tooltip is drawn
+        window = rawToolTip.getWindow();
+
+        printInfo("Dialog created");
+    }
+
+
+    /**
+     * Method that create the dialog from the given int resource
+     *
+     * @param context
+     * @param customResource
+     */
+    public void createToolTip(Context context, int customResource) {
+        printInfo("Constructor called");
+        this.context = context;
+        rawToolTip = new Dialog(context);
+        rawToolTip.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        printInfo("Dialog created");
+        this.view = ((Activity) context).getLayoutInflater().inflate(customResource, null);
+        this.customView = view;
+        printInfo("View setted on dialog");
+
+        /* set to true the default value of isCancelable*/
+        setClosePolicy(ClosePolicy.CLOSE_OUTSIDE_TAP);
+
+        //get the window where the tooltip is drawn
+        window = rawToolTip.getWindow();
+
+        printInfo("Dialog created");
+    }
+
+    /**
      * with this method is possible draw the tooltip on the ancherView at the given position
      *
      * @param anchorView
@@ -180,28 +236,53 @@ public class CustomToolTip extends DialogFragment {
                     centerDialogToView(anchorView);
 
                     WindowManager.LayoutParams params = window.getAttributes();
-                    int tooltipWidth = tooltipContainer.getWidth();
-                    int tooltipHeight = tooltipContainer.getHeight();
+                    int tooltipWidth;
+                    int tooltipHeight;
+                    if (tooltipContainer != null) {
+                        tooltipWidth = tooltipContainer.getWidth();
+                        tooltipHeight = tooltipContainer.getHeight();
+                    } else {
+                        tooltipWidth = view.getWidth();
+                        tooltipHeight = view.getHeight();
+                    }
                     switch (position) {
 
                         case BOTTOM:
-                            params.y += (tooltipHeight / 2) + (anchorView.getHeight() / 2) - (arrowDown.getHeight() / 2);
-                            showArrow(position);
+                            if (arrowDown != null) {
+                                params.y += (tooltipHeight / 2) + (anchorView.getHeight() / 2) - (arrowDown.getHeight() / 2);
+                                showArrow(position);
+                            } else {
+                                params.y += (tooltipHeight / 2) + (anchorView.getHeight() / 2);
+                            }
                             break;
                         case LEFT:
-                            params.x -= (tooltipWidth / 2) + (anchorView.getWidth() / 2) - (arrowLeft.getWidth() / 2);
-                            showArrow(position);
+                            if (arrowLeft != null) {
+                                params.x -= (tooltipWidth / 2) + (anchorView.getWidth() / 2) - (arrowLeft.getWidth() / 2);
+                                showArrow(position);
+                            } else {
+                                params.x -= (tooltipWidth / 2) + (anchorView.getWidth() / 2);
+                            }
                             break;
                         case RIGHT:
-                            params.x += (tooltipWidth / 2) + (anchorView.getWidth() / 2) - (arrowRight.getWidth() / 2);
-                            showArrow(position);
+                            if (arrowRight != null) {
+                                params.x += (tooltipWidth / 2) + (anchorView.getWidth() / 2) - (arrowRight.getWidth() / 2);
+                                showArrow(position);
+                            } else {
+                                params.x += (tooltipWidth / 2) + (anchorView.getWidth() / 2);
+                            }
                             break;
                         case TOP:
-                            params.y -= (tooltipHeight / 2) + (anchorView.getHeight() / 2) - (arrowUp.getHeight() / 2);
-                            showArrow(position);
+                            if (arrowUp != null) {
+                                params.y -= (tooltipHeight / 2) + (anchorView.getHeight() / 2) - (arrowUp.getHeight() / 2);
+                                showArrow(position);
+                            } else {
+                                params.y -= (tooltipHeight / 2) + (anchorView.getHeight() / 2);
+                            }
                             break;
                         default:
-                            showArrow(ToolTipPositionManager.NONE);
+                            if (customView == null) {
+                                showArrow(ToolTipPositionManager.NONE);
+                            }
                             break;
 
                     }
@@ -332,8 +413,15 @@ public class CustomToolTip extends DialogFragment {
         printInfo("tooltip x coordinate = " + params.x);
         printInfo("tooltip y coordinate =" + params.y);
 
-        int tooltipWidth = tooltipContainer.getWidth();
-        int tooltipHeight = tooltipContainer.getHeight();
+        int tooltipWidth;
+        int tooltipHeight;
+        if (tooltipContainer != null) {
+            tooltipWidth = tooltipContainer.getWidth();
+            tooltipHeight = tooltipContainer.getHeight();
+        } else {
+            tooltipWidth = view.getWidth();
+            tooltipHeight = view.getHeight();
+        }
 
         printInfo("tooltipWidth " + tooltipWidth);
         printInfo("tooltipHeight " + tooltipHeight);
