@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 
+import it.tooltip.callback.RDGCallback;
 import it.tooltip.closeManager.ClosePolicy;
 import it.tooltip.dialog.CustomToolTip;
 import it.tooltip.position.ToolTipPositionManager;
@@ -44,7 +45,7 @@ public class RDGToolTip {
      *************************************************************************************************************/
 
     /**
-     * The close policy : default is CLOSE_OUTSIDE
+     * The close policy : default is CLOSE_OUTSIDE_TAP
      *
      * @param closePolicy
      */
@@ -72,6 +73,13 @@ public class RDGToolTip {
         this.anchorView = anchorView;
     }
 
+    /**
+     * set the callback to execute when the dialog is closing
+     * @param callback
+     */
+    public void setOnCloseListener(RDGCallback callback) {
+        tooltip.setOnCloseListener(callback);
+    }
     /*****************************************************************************************************************
      * *************************************************  Set Methods  ************************************************
      *****************************************************************************************************************/

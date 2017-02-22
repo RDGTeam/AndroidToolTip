@@ -6,6 +6,6 @@ package it.tooltip.closeManager;
 
 public enum ClosePolicy {
 
-    CLOSE_ON_TAP, CLOSE_OUTSIDE_TAP, NO_CLOSE;
+    CLOSE_INSIDE_TAP, CLOSE_OUTSIDE_TAP, CLOSE_ANY_TAP, NO_CLOSE;
 
 }

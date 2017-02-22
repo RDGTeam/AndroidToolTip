@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import it.tooltip.R;
+import it.tooltip.callback.RDGCallback;
 import it.tooltip.closeManager.ClosePolicy;
 import it.tooltip.position.ToolTipPositionManager;
 
@@ -47,6 +49,7 @@ public class CustomToolTip extends DialogFragment {
 
     private View tooltipContainer;
 
+    private RDGCallback callback;
 
     private Window window;
 
@@ -65,6 +68,12 @@ public class CustomToolTip extends DialogFragment {
     /*******************************************************************************************************************
      * ************************************************  Public Methods  ************************************************
      *******************************************************************************************************************/
+    /**
+     * @param callback
+     */
+    public void setOnCloseListener(RDGCallback callback) {
+        this.callback = callback;
+    }
 
     /**
      * To set the message in the tooltip
@@ -105,12 +114,16 @@ public class CustomToolTip extends DialogFragment {
     public void setClosePolicy(ClosePolicy closePolicy) {
         printInfo("The close policy is = " + closePolicy);
         switch (closePolicy) {
-            case CLOSE_ON_TAP:
+            case CLOSE_INSIDE_TAP:
                 setCancelable(false);
                 view.setOnClickListener(getOnCloseListener());
                 break;
             case CLOSE_OUTSIDE_TAP:
                 setCancelable(true);
+                break;
+            case CLOSE_ANY_TAP:
+                setCancelable(true);
+                view.setOnClickListener(getOnCloseListener());
                 break;
             case NO_CLOSE:
                 setCancelable(false);
@@ -230,9 +243,23 @@ public class CustomToolTip extends DialogFragment {
         return rawToolTip;
     }
 
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        if (callback != null) {
+            callback.callback(null);
+        }
+    }
+
     /**********************************************************************************************
      * ************************************************  Private Methods  *************************
      **********************************************************************************************/
+
+    /**
+     * insert here all features the dialog should have/activate
+     */
+    private void setDialogFeatures() {
+    }
+
     /**
      * Show the  arrow base on position, hiding the other
      *
@@ -356,6 +383,9 @@ public class CustomToolTip extends DialogFragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (callback != null) {
+                    callback.callback(null);
+                }
                 rawToolTip.dismiss();
             }
         };
