@@ -60,6 +60,9 @@ public class CustomToolTip extends DialogFragment {
 
     private View customView;
 
+    //dim effect
+    private boolean dim;
+
     //offSet of screen TOOLBAR
     private int topOffset;
 
@@ -299,7 +302,14 @@ public class CustomToolTip extends DialogFragment {
             printInfo("setToolTipPosition = anchorView is null");
         }
     }
-
+    /**
+     * hide/show the dim effect
+     *
+     * @param dim
+     */
+    public void setDimEffect(Boolean dim) {
+        this.dim = dim;
+    }
     /**********************************************************************************************
      * ************************************************  @Override Methods* ************************************************
      **********************************************************************************************/
@@ -311,15 +321,15 @@ public class CustomToolTip extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        /*not to apply the successive anti dimmed effect to the general activity window*/
-        rawToolTip.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        if (dim) {
+            /*not to apply the successive anti dimmed effect to the general activity window*/
+            rawToolTip.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            /*remove the dimmed background to the dialog*/
+            rawToolTip.getWindow().setDimAmount(0);
+            printInfo("onCreateDialog = dim amount setted to 0");
+        }
         rawToolTip.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         printInfo("onCreateDialog = clearFlags applied");
-
-        /*remove the dimmed background to the dialog*/
-        rawToolTip.getWindow().setDimAmount(0);
-
-        printInfo("onCreateDialog = dim amount setted to 0");
 
         return rawToolTip;
     }

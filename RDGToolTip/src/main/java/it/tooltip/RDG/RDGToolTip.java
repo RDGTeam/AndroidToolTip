@@ -92,6 +92,15 @@ public class RDGToolTip {
     }
 
     /**
+     * Hide or show the dim effect : if true, the tooltip background will be hide and transparent
+     *
+     * @param dim
+     */
+    public void dimEffect(boolean dim) {
+        tooltip.setDimEffect(dim);
+    }
+
+    /**
      * Set the position of the tooltip as a function of the the gravity on given view
      *
      * @param anchorView
@@ -104,6 +113,7 @@ public class RDGToolTip {
 
     /**
      * set the callback to execute when the dialog is closing
+     *
      * @param callback
      */
     public void setOnCloseListener(RDGCallback callback) {
