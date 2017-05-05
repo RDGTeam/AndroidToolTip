@@ -217,6 +217,22 @@ public class CustomToolTip extends DialogFragment {
     }
 
     /**
+     * Method return the view
+     * N.B.: it could return null if the view is not initialized
+     *
+     * @return
+     */
+    public View getToolTipView() {
+        if (view != null) {
+            return view;
+        }
+        printInfo("The view is null...");
+        return null;
+
+
+    }
+
+    /**
      * with this method is possible draw the tooltip on the ancherView at the given position
      *
      * @param anchorView
@@ -302,6 +318,7 @@ public class CustomToolTip extends DialogFragment {
             printInfo("setToolTipPosition = anchorView is null");
         }
     }
+
     /**
      * hide/show the dim effect
      *
@@ -310,6 +327,7 @@ public class CustomToolTip extends DialogFragment {
     public void setDimEffect(Boolean dim) {
         this.dim = dim;
     }
+
     /**********************************************************************************************
      * ************************************************  @Override Methods* ************************************************
      **********************************************************************************************/
