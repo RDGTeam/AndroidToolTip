@@ -101,6 +101,15 @@ public class RDGToolTip {
     }
 
     /**
+     * -     * @return the view inflated in the tooltip
+     * -     * N.B.: it could return null
+     * -
+     */
+    public View getView() {
+        return tooltip.getView();
+    }
+
+    /**
      * Set the position of the tooltip as a function of the the gravity on given view
      *
      * @param anchorView
