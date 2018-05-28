@@ -324,7 +324,7 @@ public class CustomToolTip extends DialogFragment {
      *
      * @param dim
      */
-    public void setDimEffect(Boolean dim) {
+    public void setDimEffect(boolean dim) {
         this.dim = dim;
     }
 
